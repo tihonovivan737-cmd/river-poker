@@ -1,0 +1,9 @@
+node_modules/
+.deps-residual/
+dist-e2e/
+dist/
+.env
+.env.local
+test-results/
+playwright-report/
+*.log

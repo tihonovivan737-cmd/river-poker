@@ -1,0 +1,585 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  color-scheme: dark;
+  --ink: #141b19;
+  --paper: #f2e9d7;
+  --gold: #e9c588;
+  --line: #37403a;
+  --muted: #abb6aa;
+  font:
+    16px "Segoe UI",
+    Arial,
+    sans-serif;
+  color: var(--paper);
+  background: var(--ink);
+}
+body {
+  min-width: 940px;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  border: 1px solid #536055;
+  color: var(--paper);
+  background: #26332c;
+  border-radius: 5px;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+button:hover {
+  filter: brightness(1.16);
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+header {
+  height: 72px;
+  padding: 0 5vw;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  font:
+    bold 31px Georgia,
+    serif;
+  letter-spacing: -1.4px;
+}
+.brand span {
+  display: inline-grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  margin-right: 6px;
+  border: 1px solid #ac925f;
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 25px;
+}
+.status,
+small,
+.limits,
+.roomheading small {
+  font-size: 13px;
+  color: var(--muted);
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #997d68;
+}
+.status .online {
+  background: #93bd8e;
+}
+.lobby {
+  max-width: 1440px;
+  margin: auto;
+  min-height: calc(100vh - 72px);
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  align-items: center;
+  padding: 4vh 6vw;
+  gap: 8vw;
+}
+.poster {
+  position: relative;
+  padding: 14px;
+  background: radial-gradient(
+    ellipse at 30% 30%,
+    #36574a,
+    #233f34 60%,
+    #20382e
+  );
+  height: min(72vh, 760px);
+  min-height: 490px;
+  border-radius: 6px;
+  box-shadow: 0 15px 60px #080c092c;
+}
+.poster-frame {
+  height: 100%;
+  position: relative;
+  border: 1px solid #abac7a70;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-bottom: 6%;
+}
+.poster-frame:before,
+.felt:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    38deg,
+    transparent 0 3px,
+    #b9c4ae08 3px 4px
+  );
+  pointer-events: none;
+}
+.corner {
+  position: absolute;
+  color: #cfbd93;
+  font: 27px Georgia;
+}
+.c1 {
+  top: 12px;
+  left: 18px;
+}
+.c2 {
+  bottom: 12px;
+  right: 18px;
+}
+.fan {
+  height: 50%;
+  width: 70%;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.large-card {
+  position: absolute;
+  width: clamp(107px, 10vw, 155px);
+  aspect-ratio: 0.68;
+  border-radius: 10px;
+  box-shadow: 0 9px 18px #09161066;
+}
+.ace {
+  background: #f5ecd9;
+  transform: translate(19%, -3%) rotate(13deg);
+  color: #25392f;
+  display: grid;
+  place-items: center;
+  border: 5px solid #f5ecd9;
+  outline: 1px solid #a99c78;
+  outline-offset: -10px;
+}
+.ace b {
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  font: bold 20px/0.85 Georgia;
+}
+.ace b:last-child {
+  inset: auto 8px 7px auto;
+  transform: rotate(180deg);
+}
+.ace strong {
+  font: clamp(72px, 6vw, 102px) Georgia;
+}
+.back {
+  transform: translate(-27%, 1%) rotate(-17deg);
+  border: 5px solid #e4d8bd;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 6px, #ccd4ab80 6px 7px),
+    repeating-linear-gradient(-45deg, #476354 0 6px, #b7bb9780 6px 7px);
+  outline: 1px solid #e4d8bd;
+  outline-offset: -10px;
+}
+.poster-title {
+  font:
+    clamp(58px, 5.8vw, 94px) / 0.92 Georgia,
+    serif;
+  letter-spacing: -0.06em;
+  margin: 3% 0 4%;
+}
+.poster-title em {
+  font-weight: normal;
+  color: #e9d3a3;
+}
+.poster-foot {
+  font-size: 13px;
+  color: #d5dccb;
+}
+.entrance {
+  max-width: 440px;
+}
+.suitline {
+  letter-spacing: 9px;
+  font: 22px Georgia;
+  color: #ddcea9;
+}
+.suitline i {
+  font-style: normal;
+  color: #c18576;
+}
+.entrance h1,
+.roomheading h1 {
+  font:
+    normal clamp(40px, 4vw, 62px) / 1 Georgia,
+    serif;
+  letter-spacing: -0.05em;
+  margin: 19px 0;
+}
+.entrance p {
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0 0 23px;
+  max-width: 370px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #dfdfcf;
+  margin-bottom: 12px;
+}
+input,
+select {
+  width: 100%;
+  color: var(--paper);
+  border: 1px solid #526055;
+  border-radius: 4px;
+  background: #1b2520;
+  padding: 12px 14px;
+}
+input::placeholder {
+  color: #87948b;
+}
+.entrance button {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 6px;
+}
+.gold {
+  background: var(--gold);
+  color: #282619;
+  border-color: var(--gold);
+}
+.gold span {
+  float: right;
+}
+.outline {
+  background: transparent;
+}
+.link {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.pair,
+.limits {
+  display: flex;
+  gap: 16px;
+}
+.pair label {
+  flex: 1;
+}
+.limits {
+  border-top: 1px solid var(--line);
+  margin-top: 23px;
+  padding-top: 16px;
+  justify-content: space-between;
+}
+.limits b {
+  display: block;
+  margin-top: 5px;
+  color: #e2ddca;
+  font: 22px Georgia;
+}
+[role="alert"] {
+  color: #ffbbae;
+  font-size: 14px;
+}
+.room {
+  max-width: 1760px;
+  margin: auto;
+  padding: 0 3vw;
+  height: calc(100dvh - 72px);
+  display: flex;
+  flex-direction: column;
+}
+.roomheading {
+  min-height: 94px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.roomheading h1 {
+  font-size: 33px;
+  margin: 5px 0;
+  overflow-wrap: anywhere;
+}
+.invite {
+  position: relative;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.invite small {
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+.gamegrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  min-height: 0;
+  flex: 1;
+  gap: 24px;
+}
+.arena {
+  position: relative;
+  margin: 26px 0 52px;
+}
+.felt {
+  position: absolute;
+  inset: 6% 3%;
+  border-radius: 48% / 50%;
+  background: radial-gradient(ellipse, #375d49, #264635 76%);
+  border: 9px solid #363c30;
+  box-shadow:
+    0 0 0 1px #72694d,
+    inset 0 0 0 2px #718165,
+    inset 0 0 35px #172c1e,
+    0 16px 32px #0004;
+  overflow: hidden;
+}
+.felt:before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: inherit;
+  border: 1px solid #a2a98659;
+}
+.center {
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.center small {
+  color: #d2d8c3;
+}
+.board,
+.seatcards {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+.board {
+  margin: 9px 0;
+}
+.card {
+  width: clamp(44px, 4vw, 72px);
+  aspect-ratio: 0.71;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #f7efdc;
+  color: #23342b;
+  border-radius: 5px;
+  padding: 4px 7px;
+  box-shadow: 0 2px 4px #13171244;
+  font: 23px/1 Georgia;
+}
+.card i {
+  font-style: normal;
+  align-self: flex-end;
+  font-size: 1.2em;
+}
+.red {
+  color: #a84039;
+}
+.blank {
+  background: #ffffff09;
+  border: 1px dashed #a0b6956b;
+  box-shadow: none;
+  display: grid;
+  place-items: center;
+  color: #afc3a74d;
+}
+.pot {
+  font: 22px Georgia;
+}
+.seat {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 108px;
+  max-width: 19%;
+  text-align: center;
+  background: #212c24;
+  border: 1px solid #53634f;
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 4px 12px #0004;
+}
+.seatname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.seatname i {
+  font: bold 11px Arial;
+  border-radius: 50%;
+  padding: 2px 4px;
+  color: #27291e;
+  background: #ebd5a1;
+  margin-right: 5px;
+}
+.seat > b {
+  font: 20px Georgia;
+  color: var(--gold);
+}
+.seat small {
+  display: block;
+  font-size: 11px;
+}
+.active {
+  border: 2px solid var(--gold);
+}
+.timer {
+  font-size: 12px;
+  color: var(--gold);
+  padding-left: 7px;
+}
+.empty {
+  min-width: 80px;
+  background: #263a2e;
+  color: #a4b6a4;
+  font-size: 12px;
+}
+.seatcards {
+  position: absolute;
+  bottom: calc(100% - 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 2px;
+}
+.concealed {
+  display: block;
+  width: 38px;
+  height: 22px;
+  position: relative;
+}
+.concealed:before, .concealed:after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 20px;
+  left: 4px;
+  border: 1px solid #d3c5a7;
+  border-radius: 3px;
+  background: repeating-linear-gradient(45deg,#476354 0 3px,#98a58a 3px 4px);
+  transform: rotate(-10deg);
+}
+.concealed:after {left: 17px; transform: rotate(10deg)}
+.seatcards .card {
+  width: 34px;
+  font-size: 17px;
+  padding: 3px 4px;
+}
+.seat[style*="8%"] .seatcards {
+  bottom: auto;
+  top: 100%;
+}
+aside {
+  border-left: 1px solid var(--line);
+  padding: 14px 0 0 20px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+h2 {
+  font: 25px Georgia;
+  margin: 0 0 7px;
+}
+aside ol {
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+  line-height: 1.4;
+}
+aside li {
+  font-size: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  color: #c8d1c4;
+}
+.actionbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  min-height: 124px;
+  gap: 15px;
+}
+.actionbar h2 {
+  margin-top: 4px;
+}
+.actionbar p {
+  color: var(--gold);
+}
+.controls {
+  padding: 0;
+  border: 0;
+}
+.moves,
+.sizing {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.sizing {
+  margin-bottom: 8px;
+}
+.sizing label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.sizing input {
+  width: 95px;
+  padding: 5px;
+}
+.sizing button {
+  padding: 4px 10px;
+  font-size: 13px;
+}
+@media (min-height: 900px) {
+  .arena {
+    margin: 56px 0 75px;
+  }
+  .seat {
+    min-width: 135px;
+    padding: 11px;
+  }
+  .seatcards .card {
+    width: 45px;
+    font-size: 21px;
+  }
+  .actionbar {
+    min-height: 148px;
+  }
+}
