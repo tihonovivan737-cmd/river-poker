@@ -44,6 +44,11 @@ test("private invitation, refresh, duplicate raise, showdown and payout", async 
     };
   });
   await a.getByLabel("Сумма ставки").fill("40");
+  const slider = a.getByRole("slider", { name: "Выбрать ставку ползунком" });
+  await expect(slider).toHaveValue("40");
+  await slider.press("ArrowRight");
+  await expect(a.getByLabel("Сумма ставки")).toHaveValue("41");
+  await slider.press("ArrowLeft");
   await click(a, "Повысить до 40");
   await expect(a.locator("body")).toHaveAttribute("data-replayed", "true");
   await expect(

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { io } from "socket.io-client";
 import type { Entry, Move, Options, Table } from "./types";
 import "./style.css";
+import "./club.css";
 
 const socket = io(
   import.meta.env.VITE_SERVER_URL ||
@@ -62,158 +63,138 @@ function Lobby({ connected }: { connected: boolean }) {
       );
   }
   return (
-    <main className="lobby">
-      <section className="poster" aria-label="Техасский холдем">
-        <div className="poster-frame">
-          <span className="corner c1">♠</span>
-          <span className="corner c2">♦</span>
-          <div className="fan" aria-hidden="true">
-            <div className="large-card back"></div>
-            <div className="large-card ace">
-              <b>
-                A<br />♠
-              </b>
-              <strong>♠</strong>
-              <b>
-                A<br />♠
-              </b>
-            </div>
-          </div>
-          <div className="poster-title">
-            Техасский
-            <br />
-            <em>холдем</em>
-          </div>
-          <div className="poster-foot">
-            Безлимитный покер · Виртуальные фишки
-          </div>
-        </div>
-      </section>
-      <section className="entrance">
-        <div className="suitline">
-          ♠ <i>♥</i> ♣ <i>♦</i>
-        </div>
-        <h1>
-          {mode === "create"
-            ? "Новая комната"
-            : mode === "join"
-              ? "Вход по коду"
-              : "Войти в игру"}
-        </h1>
-        <p>
-          {mode === "home"
-            ? "Найдите соперников или соберите друзей за своим столом."
-            : mode === "create"
-              ? "Выберите параметры своего стола."
-              : "Введите ник и код приглашения."}
-        </p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            enter(
-              mode === "home" ? "quick" : mode === "create" ? "create" : "join",
-            );
-          }}
-        >
-          <label>
-            Ваш ник
-            <input
-              id="nick"
-              placeholder="Имя за столом"
-              maxLength={20}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </label>
-          {mode === "create" && (
-            <>
-              <label>
-                Название комнаты
-                <input
-                  required
-                  maxLength={40}
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </label>
-              <div className="pair">
-                <label>
-                  Видимость
-                  <select
-                    value={priv ? "private" : "public"}
-                    onChange={(e) => setPriv(e.target.value === "private")}
-                  >
-                    <option value="private">Приватная</option>
-                    <option value="public">Публичная</option>
-                  </select>
-                </label>
-                <label>
-                  Мест
-                  <select
-                    value={size}
-                    onChange={(e) => setSize(+e.target.value)}
-                  >
-                    {[2, 3, 4, 5, 6].map((n) => (
-                      <option key={n}>{n}</option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-            </>
-          )}
-          {mode === "join" && (
+    <main className={"lobby mode-" + mode}>
+      <section className="lobby-hero">
+        <div className="entrance">
+          <h1>
+            {mode === "create"
+              ? "Новая комната"
+              : mode === "join"
+                ? "Вход по коду"
+                : "Техасский холдем"}
+          </h1>
+          <p>
+            {mode === "home"
+              ? "Безлимитный покер на виртуальные фишки"
+              : mode === "create"
+                ? "Выберите параметры своего стола."
+                : "Введите ник и код приглашения."}
+          </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              enter(
+                mode === "home"
+                  ? "quick"
+                  : mode === "create"
+                    ? "create"
+                    : "join",
+              );
+            }}
+          >
             <label>
-              Код комнаты
+              Ваш ник
               <input
-                required
-                maxLength={6}
-                value={code}
-                onChange={(e) => setCode(e.target.value.toUpperCase())}
+                id="nick"
+                placeholder="Имя за столом"
+                maxLength={20}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </label>
-          )}
-          {error && <div role="alert">{error}</div>}
-          <button className="gold" disabled={!connected || busy}>
-            {mode === "home"
-              ? "Быстрая игра"
-              : mode === "create"
-                ? "Открыть стол"
-                : "Войти за стол"}{" "}
-            <span aria-hidden="true">→</span>
-          </button>
-        </form>
-        {mode === "home" ? (
-          <>
-            <button
-              className="outline"
-              onClick={() => {
-                setError("");
-                setMode("create");
-              }}
-            >
-              Создать комнату
+            {mode === "create" && (
+              <>
+                <label>
+                  Название комнаты
+                  <input
+                    required
+                    maxLength={40}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </label>
+                <div className="pair">
+                  <label>
+                    Видимость
+                    <select
+                      value={priv ? "private" : "public"}
+                      onChange={(e) => setPriv(e.target.value === "private")}
+                    >
+                      <option value="private">Приватная</option>
+                      <option value="public">Публичная</option>
+                    </select>
+                  </label>
+                  <label>
+                    Мест
+                    <select
+                      value={size}
+                      onChange={(e) => setSize(+e.target.value)}
+                    >
+                      {[2, 3, 4, 5, 6].map((n) => (
+                        <option key={n}>{n}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+              </>
+            )}
+            {mode === "join" && (
+              <label>
+                Код комнаты
+                <input
+                  required
+                  maxLength={6}
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.toUpperCase())}
+                />
+              </label>
+            )}
+            {error && <div role="alert">{error}</div>}
+            <button className="gold" disabled={!connected || busy}>
+              {mode === "home"
+                ? "Быстрая игра"
+                : mode === "create"
+                  ? "Открыть стол"
+                  : "Войти за стол"}{" "}
+              <span aria-hidden="true">→</span>
             </button>
+          </form>
+          {mode === "home" ? (
+            <>
+              <button
+                className="outline"
+                onClick={() => {
+                  setError("");
+                  setMode("create");
+                }}
+              >
+                Создать комнату
+              </button>
+              <button
+                className="link"
+                onClick={() => {
+                  setError("");
+                  setMode("join");
+                }}
+              >
+                Войти по коду
+              </button>
+            </>
+          ) : (
             <button
               className="link"
               onClick={() => {
+                setMode("home");
                 setError("");
-                setMode("join");
               }}
             >
-              Войти по коду
+              ← В лобби
             </button>
-          </>
-        ) : (
-          <button
-            className="link"
-            onClick={() => {
-              setMode("home");
-              setError("");
-            }}
-          >
-            ← В лобби
-          </button>
-        )}
+          )}
+        </div>
+      </section>
+      <section className="table-specs">
+        <h2>Параметры стола</h2>
         <div className="limits">
           <div>
             Стартовый стек<b>1 000</b>
@@ -270,6 +251,15 @@ function Actions({
               onChange={(e) => setAmount(e.target.value)}
             />
           </label>
+          <input
+            className="bet-slider"
+            aria-label="Выбрать ставку ползунком"
+            type="range"
+            min={o.min}
+            max={o.max}
+            value={Math.max(o.min, Math.min(o.max, Number(amount) || o.min))}
+            onChange={(e) => setAmount(e.target.value)}
+          />
           {[0.5, 1].map((f) => (
             <button
               key={f}
@@ -405,13 +395,22 @@ function RoomView({ t, connected }: { t: Table; connected: boolean }) {
                 {p ? (
                   <>
                     <div className="seatcards">
-                      {!p.cards.length && t.actor >= 0 && (p.status === "" || p.status === "Олл-ин") &&
-                        <span className="concealed" aria-label="Две закрытые карты" />}
+                      {!p.cards.length &&
+                        t.actor >= 0 &&
+                        (p.status === "" || p.status === "Олл-ин") && (
+                          <span
+                            className="concealed"
+                            aria-label="Две закрытые карты"
+                          />
+                        )}
                       {p.cards.map((c) => (
                         <Card key={c} value={c} />
                       ))}
                     </div>
                     <div className="seatname">
+                      <span className="player-avatar" aria-hidden="true">
+                        {p.name.slice(0, 1).toUpperCase()}
+                      </span>
                       {id === t.button && <i>D</i>}
                       {p.name}
                       {id === t.me ? " · вы" : ""}
